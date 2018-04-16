@@ -1,3 +1,6 @@
 # Execute_CMD
 
-#### 命令执行系统
+##### add server
+```python
+ 格式：[ip] [port] [username] [password]
+```
