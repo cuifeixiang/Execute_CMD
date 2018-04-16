@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="height: 30px;">
+        <a href="server_add.html" style="text-decoration: none">
+            <input type="button" value="服务器添加">
+        </a>
+    </div>
+
+    <div>
+        <input type="button" value="全选" onclick="ChooseAll()" />
+        <input type="button" value="取消" onclick="CancelAll()" />
+        <input type="button" value="反选" onclick="ReverseAll()" />
+    </div>
+
+    <div id="ip">
+    {% for host in server %}
+        <div>
+            <input type="checkbox" name="choose" />{{ host.ip }}
+        </div>
+    {% endfor %}
+    </div>
+
+    <div style="height: 50px;">
+        <form action="cmd_run.html" method="post">
+            <input type="text" name="cmd" />
+            <input type="submit" value="确认">
+        </form>
+    </div>
+    <div>
+        {% for row in result %}
+            <div style="width: 800px; border: dashed 1px #dddddd;">
+            <p style="text-align: center;">{{ row.ip }}</p>
+            <pre style="color: red;font-size: 15px">{{ row.result }}</pre>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function ChooseAll() {
+            var tbody = document.getElementById('ip');
+            // 获取所有的tr
+            var tr_list = tbody.children;
+            for(var i=0;i<tr_list.length;i++){
+                var current_tr = tr_list[i];
+                var checkbox = current_tr.children[0];
+                checkbox.checked = true;
+            }
+        }
+        function CancelAll() {
+            var tbody = document.getElementById('ip');
+            var tr_list = tbody.children;
+            for(var i=0;i<tr_list.length;i++){
+                var current_tr = tr_list[i];
+                var checkbox = current_tr.children[0];
+                checkbox.checked = false;
+            }
+        }
+        function ReverseAll() {
+            var tbody = document.getElementById('ip');
+            var tr_list = tbody.children;
+            for(var i=0;i<tr_list.length;i++){
+                var current_tr = tr_list[i];
+                var checkbox = current_tr.children[0];
+                if(checkbox.checked) {
+                    checkbox.checked = false;
+                }else{
+                    checkbox.checked = true;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

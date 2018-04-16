@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+
+        <a href="cmd_run.html" style="text-decoration: none">
+            <input type="button" value="执行命令">
+        </a>
+    </div>
+    <form action="server_add.html" method="post">
+        <p><textarea name="server_info" style="width: 350px;height: 100px;"></textarea></p>
+        {% if "list" in result %}
+        <p style="color: red;">{{ result }}</p>
+         {% else %}
+        <p style="color: green;">{{ result }}</p>
+        {% endif %}
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>
