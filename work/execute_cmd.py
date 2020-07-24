@@ -11,7 +11,7 @@ class Execute_cmd(object):
         self.username = username
         self.password = password
 
-    def ssh_conn(self,cmd):
+    def ssh_conn(self, cmd):
         # 创建SSH对象
         ssh = paramiko.SSHClient()
         # 允许连接不在know_hosts文件中的主机
@@ -31,7 +31,7 @@ class Execute_cmd(object):
 
 class Command_Run(object):
 
-    def cmd_run(self, cmd, ip ,port, username, password):
+    def cmd_run(self, cmd, ip, port, username, password):
         client = Execute_cmd(ip, port, username, password)
         result = client.ssh_conn(cmd)
         return result

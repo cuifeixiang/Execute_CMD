@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>add host</title>
 </head>
 <body>
     <div>
@@ -12,7 +12,7 @@
         </a>
     </div>
     <form action="server_add.html" method="post">
-        <p><textarea name="server_info" style="width: 350px;height: 100px;"></textarea></p>
+        <p><textarea name="server_info" placeholder='ip port username password' style="width: 350px;height: 100px;"></textarea></p>
         {% if "list" in result %}
         <p style="color: red;">{{ result }}</p>
          {% else %}
