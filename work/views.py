@@ -12,21 +12,25 @@ class Execution(View):
     obj = models.Server_Info.objects.all()
 
     def get(self, request, *args, **kwargs):
+        # for i in self.obj:
+        #     print(i)
         return render(request, "cmd_run.html", {"server": self.obj})
 
     def post(self, request, *args, **kwargs):
-        result_list = []
 
         command = request.POST.get('cmd')
         if command:
             result_cmd = Command_Run()
+            ops_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             for host in self.obj:
                 result = result_cmd.cmd_run(command, host.ip, host.port, host.username, host.password)
-                result_list.append(result)
-            ops_log = Ops_log_redis()
-            log_key = time.strftime("%Y%m%d%H%M%S", time.localtime())
-            ops_log.lpush_insert(log_key, "%s" % result_list)
-            return render(request, "cmd_run.html", {"server": self.obj, "result": result_list})
+                print(result)
+                # models.Ops_log.objects.create(ops_time=ops_time, result=result)
+            # ops_log = Ops_log_redis()
+            # log_key = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            # ops_log.lpush_insert(log_key, "%s" % result_list)
+            # return render(request, "cmd_run.html", {"server": self.obj, "result": result_list})
+            return redirect("/ops_log.html")
         else:
             return render(request, "cmd_run.html", {"server": self.obj})
 
@@ -67,7 +71,6 @@ class Ops_log(View):
     """get ops log"""
 
     def get(self, request, *args, **kwargs):
-        ops = Ops_log_redis()
-        result = ops.lpush_get("20200724182538")
-        print(ops.lpush_get("20200724182538"))
-        return render(request, "ops_log.html", {"result": eval(result)})
+        result = models.Ops_log.objects.all()
+        # print(eval(result))
+        return render(request, "ops_log.html", {"result": result})

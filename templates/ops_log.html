@@ -5,9 +5,11 @@
     <title>ops log</title>
 </head>
 <body>
-{#{{ result }}#}
+{{ result }}
 {% for row in result %}
-    <p>{{ row.ip }} {{ row.result }}</p>
+<P>{{ row.id }}</P>
+<P>{{ row.ops_time }}</P>
+<p>{{ row.result }}</p>
 {% endfor %}
 </body>
 </html>

@@ -12,3 +12,12 @@ class Server_Info(models.Model):
     class Meta:
         db_table = "server_information"
 
+
+class Ops_log(models.Model):
+    """save ops command result log"""
+
+    ops_time = models.DateTimeField('create date', auto_now=True)
+    result = models.CharField(max_length=10240)
+
+    class Meta:
+        db_table = "ops_command_result_log"
