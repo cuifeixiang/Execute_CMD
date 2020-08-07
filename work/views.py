@@ -24,8 +24,8 @@ class Execution(View):
             ops_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             for host in self.obj:
                 result = result_cmd.cmd_run(command, host.ip, host.port, host.username, host.password)
-                print(result)
-                # models.Ops_log.objects.create(ops_time=ops_time, result=result)
+                print(result.get('ip'), result.get('result'))
+                models.Ops_log.objects.create(ops_time=ops_time, ip=result.get('ip'), result=result.get('result'))
             # ops_log = Ops_log_redis()
             # log_key = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             # ops_log.lpush_insert(log_key, "%s" % result_list)

@@ -17,6 +17,7 @@ class Ops_log(models.Model):
     """save ops command result log"""
 
     ops_time = models.DateTimeField('create date', auto_now=True)
+    ip = models.CharField(max_length=20)
     result = models.CharField(max_length=10240)
 
     class Meta:
