@@ -5,10 +5,29 @@
     <title>ops log</title>
 </head>
 <body>
-{#{{ result }}#}
-{% for row in result %}
-<P>{{ row.id }} {{ row.ops_time }} {{ row.ip }} {{ row.result }}  </P>
-
-{% endfor %}
+<table border="1" style="color: black">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>time</th>
+            <th>ip</th>
+            <th>detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in result %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.ops_time }}</td>
+            <td>{{ row.ip }}</td>
+            <td>
+                <a style="text-decoration: none" class="detail" target="_blank" href="/ops_log.html/{{ row.id }}">
+                    <input type="button" value="详情">
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>

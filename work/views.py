@@ -74,3 +74,17 @@ class Ops_log(View):
         result = models.Ops_log.objects.all()
         # print(eval(result))
         return render(request, "ops_log.html", {"result": result})
+
+
+class Ops_log_detail(View):
+    """ops logs detail"""
+
+    def get(self, request, log_id):
+        result = ""
+        try:
+            if log_id:
+                result = models.Ops_log.objects.filter(id=log_id)
+        except IndexError as e:
+            result = "ERROR: %s" % e
+        return render(request, 'log_detail.html', {'result': result})
+
