@@ -1,3 +1,4 @@
+# views
 from django.shortcuts import render,redirect,HttpResponse
 from django.views import View
 from work.execute_cmd import *
@@ -9,11 +10,9 @@ import gevent
 
 class Execution(View):
 
-    obj = models.Server_Info.objects.all()
+    obj = models.Server_Info.objects.values("ip")
 
     def get(self, request, *args, **kwargs):
-        # for i in self.obj:
-        #     print(i)
         return render(request, "cmd_run.html", {"server": self.obj})
 
     def post(self, request, *args, **kwargs):
@@ -26,10 +25,6 @@ class Execution(View):
                 result = result_cmd.cmd_run(command, host.ip, host.port, host.username, host.password)
                 print(result.get('ip'), result.get('result'))
                 models.Ops_log.objects.create(ops_time=ops_time, ip=result.get('ip'), result=result.get('result'))
-            # ops_log = Ops_log_redis()
-            # log_key = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            # ops_log.lpush_insert(log_key, "%s" % result_list)
-            # return render(request, "cmd_run.html", {"server": self.obj, "result": result_list})
             return redirect("/ops_log.html")
         else:
             return render(request, "cmd_run.html", {"server": self.obj})
@@ -87,4 +82,19 @@ class Ops_log_detail(View):
         except IndexError as e:
             result = "ERROR: %s" % e
         return render(request, 'log_detail.html', {'result': result})
+
+
+class Logs_id(View):
+    """每个执行任务的id"""
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+
+class Redis_stat(View):
+    """监控redis cluster"""
+
+    def get(self, request, *args, **kwargs):
+        pass
+
 

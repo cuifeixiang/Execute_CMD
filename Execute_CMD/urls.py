@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^server_add.html$', views.Server_add.as_view()),
     url(r'^ops_log.html$', views.Ops_log.as_view()),
     url(r'^ops_log.html/(.+)$', views.Ops_log_detail.as_view()),
+
+    url(r'^ops_log.html/(.+)$', views.Redis_stat.as_view()),
+
 ]
