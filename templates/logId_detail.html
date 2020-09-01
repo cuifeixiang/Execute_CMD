@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log_id_detail</title>
+</head>
+<body>
+    {% for row in result %}
+        <p>{{ row.ops_time }}</p>
+        <p>{{ row.ip }}</p>
+        <pre>{{ row.result }}</pre>
+    {% endfor %}
+</body>
+</html>

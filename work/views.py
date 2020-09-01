@@ -9,25 +9,55 @@ import gevent
 
 
 class Execution(View):
-
-    obj = models.Server_Info.objects.values("ip")
+    """cmd run"""
 
     def get(self, request, *args, **kwargs):
-        return render(request, "cmd_run.html", {"server": self.obj})
+        obj = models.Server_Info.objects.values("ip")
+        return render(request, "cmd_run.html", {"server": obj})
 
     def post(self, request, *args, **kwargs):
+
+        obj = models.Server_Info.objects.all()
 
         command = request.POST.get('cmd')
         if command:
             result_cmd = Command_Run()
             ops_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            for host in self.obj:
+            models.Log_id.objects.create(ops_time=ops_time)
+            log_id = models.Log_id.objects.filter(ops_time=ops_time)
+            for i in log_id:
+                log_id = i
+            for host in obj:
                 result = result_cmd.cmd_run(command, host.ip, host.port, host.username, host.password)
-                print(result.get('ip'), result.get('result'))
-                models.Ops_log.objects.create(ops_time=ops_time, ip=result.get('ip'), result=result.get('result'))
-            return redirect("/ops_log.html")
+                # print(result.get('ip'), result.get('result'))
+                models.Ops_log.objects.create(ops_time=ops_time,
+                                              ip=result.get('ip'),
+                                              result=result.get('result'),
+                                              log_id_id=log_id.id)
+            return render(request, "log_id.html", {"log_id": log_id})
         else:
             return render(request, "cmd_run.html", {"server": self.obj})
+
+
+class Log_id(View):
+    """log id"""
+
+    def get(self, request, *args, **kwargs):
+        result = models.Log_id.objects.all()
+        return render(request, "log_id.html", {"result_data": result})
+
+
+class Log_id_detail(View):
+    """log id detail"""
+
+    def get(self, request, log_id):
+        result = ""
+        try:
+            if log_id:
+                result = models.Ops_log.objects.filter(log_id_id=log_id)
+        except IndexError as e:
+            result = "ERROR: %s" % e
+        return render(request, 'logId_detail.html', {'result': result})
 
 
 class Server_add(View):
@@ -84,17 +114,10 @@ class Ops_log_detail(View):
         return render(request, 'log_detail.html', {'result': result})
 
 
-class Logs_id(View):
-    """每个执行任务的id"""
-
-    def get(self, request, *args, **kwargs):
-        pass
-
-
-class Redis_stat(View):
-    """监控redis cluster"""
-
-    def get(self, request, *args, **kwargs):
-        pass
+# class Redis_stat(View):
+#     """监控redis cluster"""
+# 
+#     def get(self, request, *args, **kwargs):
+#         pass
 
 

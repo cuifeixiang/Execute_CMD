@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log id</title>
+</head>
+<body>
+<table border="1" style="color: black">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>time</th>
+            <th>detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in result_data %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.ops_time }}</td>
+            <td>
+                <a style="text-decoration: none" class="detail" target="_blank" href="/logId.html/{{ row.id }}">
+                    <input type="button" value="详情">
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
