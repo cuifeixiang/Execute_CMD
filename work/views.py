@@ -34,7 +34,7 @@ class Execution(View):
                                               ip=result.get('ip'),
                                               result=result.get('result'),
                                               log_id_id=log_id.id)
-            return render(request, "log_id.html", {"log_id": log_id})
+            return render(request, "logId.html", {"log_id": log_id})
         else:
             return render(request, "cmd_run.html", {"server": self.obj})
 
